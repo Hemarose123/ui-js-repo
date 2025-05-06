@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Display User Data</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #c2e9fb, #a1c4fd);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px;
+      min-height: 100vh;
+    }
+
+    h2 {
+      color: #2b6cb0;
+      margin-bottom: 20px;
+    }
+
+    .layout-buttons {
+      margin-bottom: 30px;
+    }
+
+    .layout-buttons button {
+      margin: 0 10px;
+      padding: 10px 20px;
+      border: none;
+      background-color: #3182ce;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .layout-buttons button:hover {
+      background-color: #2b6cb0;
+    }
+
+    .card, .table-block, .animated-block {
+      display: none;
+      max-width: 400px;
+      width: 100%;
+      padding: 25px;
+      border-radius: 15px;
+      background: white;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.5s ease;
+    }
+
+    .avatar {
+      width: 100px;
+      border-radius: 50%;
+      display: block;
+      margin: 0 auto 15px;
+    }
+
+    .card h3, .animated-block h3 {
+      color: #2b6cb0;
+      text-align: center;
+    }
+
+    .card p, .animated-block p {
+      text-align: center;
+      color: #4a5568;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    th {
+      color: #4a5568;
+    }
+
+    td {
+      color: #2d3748;
+    }
+
+    .animated-block span {
+      font-size: 20px;
+      margin-right: 8px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .no-data {
+      font-size: 18px;
+      color: #e53e3e;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h2>📋 Submitted User Data</h2>
+  <div class="layout-buttons">
+    <button onclick="showLayout('card')">Profile Card</button>
+    <button onclick="showLayout('table-block')">Table View</button>
+    <button onclick="showLayout('animated-block')">Animated View</button>
+  </div>
+
+  
+  <div class="card" id="card">
+    <h3 id="cardName"></h3>
+    <p id="cardEmail"></p>
+  </div>
+
+
+  <div class="table-block" id="table-block">
+    <h3>User Details</h3>
+    <table>
+      <tr><th>Name</th><td id="tableName"></td></tr>
+      <tr><th>Email</th><td id="tableEmail"></td></tr>
+    </table>
+  </div>
+
+  
+  <div class="animated-block" id="animated-block">
+    <h3><span>👤</span><span id="animatedName"></span></h3>
+    <p><span>📧</span><span id="animatedEmail"></span></p>
+  </div>
+
+  <script>
+    const data = JSON.parse(localStorage.getItem('userData'));
+
+    if (data) {
+      document.getElementById('cardName').textContent = data.name;
+      document.getElementById('cardEmail').textContent = data.email;
+      document.getElementById('tableName').textContent = data.name;
+      document.getElementById('tableEmail').textContent = data.email;
+      document.getElementById('animatedName').textContent = data.name;
+      document.getElementById('animatedEmail').textContent = data.email;
+      showLayout('card');
+    } else {
+      document.body.innerHTML = '<p class="no-data">❌ No data found!</p>';
+    }
+
+    function showLayout(layoutId) {
+      ['card', 'table-block', 'animated-block'].forEach(id => {
+        document.getElementById(id).style.display = (id === layoutId) ? 'block' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>
